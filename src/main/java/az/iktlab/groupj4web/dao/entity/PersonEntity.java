@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,6 +38,24 @@ public class PersonEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "p_gender")
     private Gender gender;
+
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            targetEntity = CardEntity.class)
+    @JoinColumn(name = "card_id", referencedColumnName = "id")
+    private CardEntity card;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "person_images", schema = "group_j4",
+            joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "p_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id", referencedColumnName = "id"))
+    private List<ImageEntity> images;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "people_employees", schema = "group_j4",
+            joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "p_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
+    private List<EmployeeEntity> employees;
 
     @CreationTimestamp
     @Column(name = "created_at")
