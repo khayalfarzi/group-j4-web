@@ -12,5 +12,4 @@ public class GroupJ4WebApplication {
         SpringApplication.run(GroupJ4WebApplication.class, args);
 
     }
-
 }
