@@ -1,5 +1,7 @@
 package az.iktlab.groupj4web.config;
 
+import az.iktlab.groupj4web.security.AuthEntryPointJwt;
+import az.iktlab.groupj4web.security.AuthTokenFilter;
 import az.iktlab.groupj4web.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
